@@ -6,13 +6,13 @@ Created on Mon Aug 28 14:10:40 2017
 """
 from pack.goods import goods
 from pack.load import load
-import pack.unfold
+from pack.unfold import unfold
 import pack.printer as printer
 from functools import reduce
 from pack.box import box, boxTree
 
 
-class pack:
+class ppack:
     __cost = 2000
     __width = 2
     __depth = 2
@@ -23,8 +23,10 @@ class pack:
         l = load(file)
         l.load()
         self.goods = l.goods
-        self.used = {}
-        # unfold.unfold(self.goods)
+        self.used = {}  # key:g.id, value:g.isused
+        # unfold(self.goods)
+        # init boxes
+        # the number of box is equal to the number of goods
         self.boxTree = boxTree(
                 width=self.__width,
                 depth=self.__depth,
@@ -33,55 +35,65 @@ class pack:
                 cardinal=1)
 
         self.createUsed(self.goods)
-        self.boxed()
+        self.packing()
         # self.printer()
 
     def createUsed(self, gs):
         for g in gs:
             self.used[g.id] = 0
 
-    def _haveGoods(self):
+    def __haveGoods(self):
+        """
+        if or not have good is put in box
+        :return:
+        """
         return len(list(filter(lambda x: x == 0, self.used.values()))) > 0
 
     # boxed
-    def boxed(self):
+    def packing(self):
         s = {"volUsed": 0, "costed": 0, "goods": []}
         gs = []
         gs.append(self.goods)
         print('-------------')
-        for g in gs:
-            self._boxed(g, s)
+        for g in gs:  # convenience for recursion
+            self.__packing(g, s)
 
-    def _boxed(self, gs, s):
+    def __packing(self, gs, s):
         for g in gs:
 
-            isAdd = self._isAdd(g, s)
+            isAdd = self.__canPut(g, s)
 
             printer.g(g)
             print("-IsAdd: %s" % (isAdd))
 
             if isAdd:
-                self._add(g, s)
+                self.__put(g, s)
             else:
-                self._pk(s)
+                self.__packed(s)
                 self._pt(s, g)
                 # print(s["goods"])
 
             # print(s["goods"])
-            haveGoods = self._haveGoods()
+            haveGoods = self.__haveGoods()
             print('-haveGoods: %s\n\t\t%s' % (haveGoods, self.used))
             if not haveGoods:
-                self._pk(s)
+                self.__packed(s)
                 s["goods"] = []
 
-            self._boxed(g.gs, s)
+            self.__packing(g.gs, s)
 
-    def _isAdd(self, g, s):
+    def __canPut(self, g, s):
         return True if g.isUsed == False and (
                 s["volUsed"] + g.space.volume <= self.__volume and
                 s["costed"] + g.price <= self.__cost) else False
 
-    def _add(self, g, s):
+    def __put(self, g, s):
+        """
+        add good to box
+        :param g:
+        :param s:
+        :return:
+        """
         s["volUsed"] = s["volUsed"] + g.space.volume
         s["costed"] = s["costed"] + g.price
         s["goods"].append(g)
@@ -91,7 +103,12 @@ class pack:
         print("-g:%s\tVolUsed: %d\tcosted: %d" %
               (g.id, s["volUsed"], s["costed"]))
 
-    def _pk(self, s):
+    def __packed(self, s):
+        """
+        packed goods
+        :param s:
+        :return:
+        """
         b = self.boxTree.findFstBoxAvailable()
 
         b.costed = s["volUsed"]

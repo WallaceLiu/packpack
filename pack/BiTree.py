@@ -4,7 +4,6 @@ Created on Thu Sep 21 09:38:52 2017
 
 @author: liuning11
 """
-import sys
 
 
 class BiTreeNode():
@@ -25,7 +24,7 @@ def create(t):
     return root
 
 
-def preorder(root):  #前序遍历
+def preorder(root):  # 前序遍历
     if root is None:
         return
     else:
@@ -34,7 +33,7 @@ def preorder(root):  #前序遍历
         preorder(root.right)
 
 
-def inorder(root):  #中序遍历
+def inorder(root):  # 中序遍历
     if root is None:
         return
     else:

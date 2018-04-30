@@ -23,7 +23,7 @@ class box(base):
         self.volUsed = 0
 
     def addGoods(self, g):
-        self.goodses.append(g)
+        self.goods.append(g)
 
     def clone(self):
         return copy.copy(self)
