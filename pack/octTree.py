@@ -4,8 +4,8 @@ Created on Thu Sep 21 11:49:23 2017
 
 @author: liuning11
 """
-from octreeNode import OctreeNode
-from base import space
+from pack.octreeNode import OctreeNode
+from pack.base import space
 
 
 class Octree:

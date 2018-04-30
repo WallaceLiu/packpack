@@ -4,38 +4,37 @@ Created on Mon Aug 28 14:10:40 2017
 
 @author: liuning11
 """
-from goods import goods
-from load import load
-import unfold
-import printer
+from pack.goods import goods
+from pack.load import load
+import pack.unfold
+import pack.printer as printer
 from functools import reduce
-from box import box, boxTree
+from pack.box import box, boxTree
 
 
 class pack:
-
     __cost = 2000
     __width = 2
     __depth = 2
     __height = 3
     __volume = __width * __depth * __height
 
-    def __init__(self, file='goods.csv'):
+    def __init__(self, file='g.csv'):
         l = load(file)
         l.load()
         self.goods = l.goods
         self.used = {}
-        #unfold.unfold(self.goods)
+        # unfold.unfold(self.goods)
         self.boxTree = boxTree(
-            width=self.__width,
-            depth=self.__depth,
-            height=self.__height,
-            cnt=len(self.goods),
-            cardinal=1)
+                width=self.__width,
+                depth=self.__depth,
+                height=self.__height,
+                cnt=len(self.goods),
+                cardinal=1)
 
         self.createUsed(self.goods)
         self.boxed()
-        #self.printer()
+        # self.printer()
 
     def createUsed(self, gs):
         for g in gs:
@@ -66,9 +65,9 @@ class pack:
             else:
                 self._pk(s)
                 self._pt(s, g)
-                #print(s["goods"])
+                # print(s["goods"])
 
-            #print(s["goods"])
+            # print(s["goods"])
             haveGoods = self._haveGoods()
             print('-haveGoods: %s\n\t\t%s' % (haveGoods, self.used))
             if not haveGoods:
@@ -79,8 +78,8 @@ class pack:
 
     def _isAdd(self, g, s):
         return True if g.isUsed == False and (
-            s["volUsed"] + g.space.volume <= self.__volume and
-            s["costed"] + g.price <= self.__cost) else False
+                s["volUsed"] + g.space.volume <= self.__volume and
+                s["costed"] + g.price <= self.__cost) else False
 
     def _add(self, g, s):
         s["volUsed"] = s["volUsed"] + g.space.volume
@@ -120,9 +119,8 @@ class pack:
         pass
 
     def printer(self):
-        #printer.goods(self.goods)
-        #printer.box(self.boxTree)
+        # printer.goods(self.goods)
+        # printer.box(self.boxTree)
         printer.boxGoods(self.boxTree)
 
-
-#p = pack()
+# p = pack()

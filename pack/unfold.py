@@ -6,7 +6,7 @@ Created on Mon Aug 28 14:10:40 2017
 
 某个商品的三种姿态
 """
-from goods import goods
+from pack.goods import goods
 
 def unfold(gs):
     for g in gs:

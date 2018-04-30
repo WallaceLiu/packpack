@@ -4,7 +4,7 @@ Created on Mon Aug 28 14:10:40 2017
 
 @author: liuning11
 """
-from base import base, space
+from pack.base import base, space
 
 
 class goods(base):

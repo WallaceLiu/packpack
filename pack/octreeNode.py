@@ -4,8 +4,8 @@ Created on Wed Sep 20 15:48:18 2017
 
 @author: liuning11
 """
-from box import box
-from base import space
+from pack.box import box
+from pack.base import space
 
 
 class OctreeNode:
