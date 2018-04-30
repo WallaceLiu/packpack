@@ -5,6 +5,7 @@ Created on Mon Aug 28 14:10:40 2017
 @author: liuning11
 """
 from goods import goods
+import csv
 
 
 class load:
@@ -17,28 +18,21 @@ class load:
     def load(self):
         self.goods.clear()
 
-        f = open(self.__file, 'r')
+        csv.register_dialect("packpack", delimiter=",")
+
         id = 1
-        line = f.readline()
-
-        while line:
-            prefx = line[0:1]
-            attr = line.split('\t')
-
-            if prefx is not '#' and len(attr) == 4:
+        with open(self.__file, "r") as fr:
+            rows = csv.DictReader(fr, dialect="packpack")
+            for row in rows:
                 g = goods(
                         id=str(id),
-                        price=int(attr[0]),
-                        width=int(attr[1]),
-                        depth=int(attr[2]),
-                        height=int(attr[3]))
+                        price=int(row['p']),
+                        width=int(row['w']),
+                        depth=int(row['d']),
+                        height=int(row['h']))
                 self.goods.append(g)
 
                 id = id + 1
                 self.volume = self.volume + g.space.volume
                 if self.cardinal > min(g.space.wdh):
                     self.cardinal = min(g.space.wdh)
-
-            line = f.readline()
-
-        f.close()

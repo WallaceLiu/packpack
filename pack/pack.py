@@ -20,7 +20,7 @@ class pack:
     __height = 3
     __volume = __width * __depth * __height
 
-    def __init__(self, file='goods.txt'):
+    def __init__(self, file='goods.csv'):
         l = load(file)
         l.load()
         self.goods = l.goods
@@ -44,6 +44,7 @@ class pack:
     def _haveGoods(self):
         return len(list(filter(lambda x: x == 0, self.used.values()))) > 0
 
+    # boxed
     def boxed(self):
         s = {"volUsed": 0, "costed": 0, "goods": []}
         gs = []
@@ -124,4 +125,4 @@ class pack:
         printer.boxGoods(self.boxTree)
 
 
-p = pack()
+#p = pack()

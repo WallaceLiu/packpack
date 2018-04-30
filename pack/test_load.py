@@ -10,5 +10,5 @@ import unittest
 
 class TestLoad(unittest.TestCase):
     def test(self):
-        l = load('goods.txt')
+        l = load('goods.csv')
         l.load()

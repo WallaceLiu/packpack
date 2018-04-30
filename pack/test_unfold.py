@@ -12,7 +12,6 @@ import unittest
 
 class TestUnfold(unittest.TestCase):
     def test(self):
-        l = load('goods.txt')
+        l = load('goods.csv')
         l.load()
         g = unfold.unfold(l.goods)
-        printer.goods(g)
