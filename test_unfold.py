@@ -7,15 +7,12 @@ Created on Mon Aug 28 14:10:40 2017
 from load import load
 import unfold
 import printer
+import unittest
 
 
-def DoTest():
-
-    l = load()
-    l.load()
-    g = unfold.unfold(l.goods)
-    printer.goods(g)
-
-
-if __name__ == '__main__':
-    DoTest()
+class TestUnfold(unittest.TestCase):
+    def test(self):
+        l = load('goods.txt')
+        l.load()
+        g = unfold.unfold(l.goods)
+        printer.goods(g)

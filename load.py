@@ -17,7 +17,7 @@ class load:
     def load(self):
         self.goods.clear()
 
-        f = open(self.__file)
+        f = open(self.__file, 'r')
         id = 1
         line = f.readline()
 
@@ -27,11 +27,11 @@ class load:
 
             if prefx is not '#' and len(attr) == 4:
                 g = goods(
-                    id=str(id),
-                    price=int(attr[0]),
-                    width=int(attr[1]),
-                    depth=int(attr[2]),
-                    height=int(attr[3]))
+                        id=str(id),
+                        price=int(attr[0]),
+                        width=int(attr[1]),
+                        depth=int(attr[2]),
+                        height=int(attr[3]))
                 self.goods.append(g)
 
                 id = id + 1
