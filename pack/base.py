@@ -2,12 +2,12 @@
 """
 Created on Mon Aug 28 14:10:40 2017
 
-@author: liuning11
+@author: liuning800202@gmail.com
 """
 import math
 
 
-class base:
+class Base:
     """商品
     """
 
@@ -15,10 +15,10 @@ class base:
         """
         """
         self.id = id
-        self.space = space(width, depth, height)
+        self.space = Space(width, depth, height)
 
 
-class space:
+class Space:
     """商品
     """
 
@@ -65,16 +65,16 @@ class space:
         height = self.wdh[2]
 
         if width < cardinal and depth < cardinal and height < cardinal:
-            self.partition.append(space(self.wdh[0], self.wdh[1], self.wdh[2]))
+            self.partition.append(Space(self.wdh[0], self.wdh[1], self.wdh[2]))
         else:
             for i in range(0, int(width / cardinal)):
-                sp = space(cardinal, depth, height)
+                sp = Space(cardinal, depth, height)
                 self.partition.append(sp)
 
             for i in range(0, int(depth / cardinal)):
-                sp = space(width, cardinal, height)
+                sp = Space(width, cardinal, height)
                 self.partition.append(sp)
 
             for i in range(0, int(height / cardinal)):
-                sp = space(width, cardinal, cardinal)
+                sp = Space(width, cardinal, cardinal)
                 self.partition.append(sp)

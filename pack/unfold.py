@@ -6,12 +6,12 @@ Created on Mon Aug 28 14:10:40 2017
 
 某个商品的三种姿态
 """
-from pack.goods import goods
+from pack.goods import Goods
 
 def unfold(gs):
     for g in gs:
         g.gs.append(
-                goods(
+                Goods(
                         id=g.id,
                         pseudoId=str.format('%s-%s' % (g.id, '1')),
                         price=g.price,
@@ -20,7 +20,7 @@ def unfold(gs):
                         height=g.space.wdh[2]))
 
         g.gs.append(
-                goods(
+                Goods(
                         id=g.id,
                         pseudoId=str.format('%s-%s' % (g.id, '2')),
                         price=g.price,
@@ -29,7 +29,7 @@ def unfold(gs):
                         height=g.space.wdh[0]))
 
         g.gs.append(
-                goods(
+                Goods(
                         g.id,
                         pseudoId=str.format('%s-%s' % (g.id, '3')),
                         price=g.price,

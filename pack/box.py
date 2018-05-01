@@ -5,55 +5,112 @@ Created on Mon Aug 28 14:10:40 2017
 @author: liuning11
 """
 import copy
-from pack.base import base, space
+from pack.base import Base, Space
+from pack.goods import Goods
 
 
-class box(base):
+class Box(Base):
     """商品
     """
 
-    def __init__(self, id, width, depth, height):
+    def __init__(self, id, width, depth, height, cost, volume, goodsCollect):
         """
         
         """
-        base.__init__(self, id, width, depth, height)
-        self.goods = []
-        self.isFull = False
-        self.costed = 0
-        self.volUsed = 0
+        Base.__init__(self, id, width, depth, height)
 
-    def addGoods(self, g):
-        self.goods.append(g)
+        self.cost = cost
+        # self.costed = self.cost
+        self.volume = volume
+        # self.volumed = self.volume
+        # self.isFull = False
+        self.parent = None
+        self.boxLeft = None
+        self.boxRight = None
+        self.goodsCollect = []
 
-    def clone(self):
-        return copy.copy(self)
+        for g in goodsCollect:
+            self.goodsCollect.append(g)
 
-
-class boxTree:
-    """商品
-    """
-
-    def __init__(self, width=0, depth=0, height=0, cnt=0, cardinal=1):
+    def isSplit(self):
         """
-        参数
-            p   价值
-            w   长
-            d   宽
-            h   高
+        if or not need split
+        :return:
         """
-        self.id = 'ROOT'
-        self.cardinal = cardinal
-        self.boxes = []
-        self.__initBox__(width, depth, height, cnt, self.cardinal)
+        cost = 0
+        vol = 0
+        idx = 0
+        for g in self.goodsCollect:
+            if (cost + g.price > self.cost or vol + g.space.volume > self.volume):
+                return idx
+            else:
+                cost += g.price
+                vol += g.space.volume
 
-    def __initBox__(self, width, depth, height, cnt, cardinal):
-        for c in range(1, cnt):
-            bx = box(id='', width=width, depth=depth, height=height)
-            #bx.space.partition(cardinal, width, depth, height)
-            bx.id = c
-            self.boxes.append(bx)
+            idx += 1
 
-    def findFstBoxAvailable(self):
-        for b in self.boxes:
-            if b.isFull == False:
-                return b
+        return -1 if (idx >= len(self.goodsCollect)) else idx
+
+    def splitBox(self, idx):
+        """
+        split box, from one to two
+        :return:
+        :param idx:
+        :return:
+        """
+        bx_left = Box(self.id - 1, self.space.wdh[0], self.space.wdh[1], self.space.wdh[2], self.cost, self.volume,
+                      self.goodsCollect[:idx])
+        bx_left.parent = self
+
+        bx_right = Box(self.id + 1, self.space.wdh[0], self.space.wdh[1], self.space.wdh[2], self.cost, self.volume,
+                       self.goodsCollect[-1 * (len(self.goodsCollect) - idx):])
+        bx_right.parent = self
+
+        self.boxLeft = bx_left
+        self.boxRight = bx_right
+
+        self.goodsCollect = []
+
+        print('\t\tCreate Box...ID=%d' % (bx_left.id))
+        Goods.printCollect(bx_left.goodsCollect)
+        print('\t\tCreate Box...ID=%d' % (bx_right.id))
+        Goods.printCollect(bx_right.goodsCollect)
+
+    def print(self):
+        def __print(box):
+            if (box.boxLeft == None and box.boxRight == None):
+                print('ID=%d' % (box.id))
+                Goods.printCollect(box.goodsCollect)
+
+            if (box.boxLeft != None):
+                __print(box.boxLeft)
+            if (box.boxRight != None):
+                __print(box.boxRight)
+
+        print('\n=============================================================')
+        print('Box INFO:')
+        print('-------------------------------------------------------------')
+        if (self.boxLeft == None and self.boxRight == None):
+            print('ID=%d\tWDH=%s\tCOST=%d\tVOL=%d' % (self.id, self.space.wdh, self.cost, self.volume))
+            Goods.printCollect(self.goodsCollect)
+
+        if (self.boxLeft != None):
+            __print(self.boxLeft)
+        if (self.boxRight != None):
+            __print(self.boxRight)
+        print('=============================================================')
+
+    @staticmethod
+    def create(width, depth, height, cost, volume, goodsCollect):
+        """
+        init create the root of box
+        :param width:
+        :param depth:
+        :param height:
+        :param cost:
+        :param volume:
+        :param goodsCollect:
+        :return:
+        """
+        root = Box(1000, width, depth, height, cost, volume, goodsCollect)
+        return root

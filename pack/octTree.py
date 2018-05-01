@@ -5,7 +5,7 @@ Created on Thu Sep 21 11:49:23 2017
 @author: liuning11
 """
 from pack.octreeNode import OctreeNode
-from pack.base import space
+from pack.base import Space
 
 
 class Octree:
@@ -21,7 +21,7 @@ class Octree:
             max(self.box.space.wdh[0], self.box.space.wdh[1]),
             self.box.space.wdh[2])
         edge = v if v % 2 == 0 else v + 1
-        return space(edge, edge, edge)
+        return Space(edge, edge, edge)
 
     def create(self):
         def _isFullOrEmpty(s, bx):
@@ -94,7 +94,7 @@ class Octree:
             }
 
             m = shape[str(direction)]
-            s = space(m[1] - m[0], m[3] - m[2], m[5] - m[4])
+            s = Space(m[1] - m[0], m[3] - m[2], m[5] - m[4])
             s.setXYZ(m[0], m[1], m[2], m[3], m[4], m[5])
 
             return s

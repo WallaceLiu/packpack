@@ -12,6 +12,6 @@ import unittest
 
 class TestUnfold(unittest.TestCase):
     def test(self):
-        l = load('g.csv')
+        l = load('goods-1.csv')
         l.load()
         g = unfold(l.goods)
