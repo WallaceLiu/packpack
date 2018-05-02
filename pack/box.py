@@ -31,10 +31,7 @@ class Box(Base):
         self.parent = None
         self.boxLeft = None
         self.boxRight = None
-        self.goodsCollect = []
-
-        for g in goodsCollect:
-            self.goodsCollect.append(g)
+        self.goodsCollect = [g for g in goodsCollect]
 
     def isSplit(self):
         """

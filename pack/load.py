@@ -17,20 +17,16 @@ class load:
 
         csv.register_dialect("packpack", delimiter=",")
 
-        id = 1
+        id = 0
         with open(self.__file, "r") as fr:
             rows = csv.DictReader(fr, dialect="packpack")
-            for row in rows:
-                g = Goods(
-                        id=id,
-                        pseudoId=str(id),
-                        price=int(row['p']),
-                        width=int(row['w']),
-                        depth=int(row['d']),
-                        height=int(row['h']))
-
-                goods.append(g)
-
-                id += 1
+            rows_list = list(rows)
+            goods = [Goods(
+                    id=i + 1,
+                    pseudoId=str(id),
+                    price=int(rows_list[i]['p']),
+                    width=int(rows_list[i]['w']),
+                    depth=int(rows_list[i]['d']),
+                    height=int(rows_list[i]['h'])) for i in range(len(rows_list))]
 
         return Goods.sort(goods)
