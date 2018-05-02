@@ -1,2 +1,2 @@
 # packpack
-pack program
+pack sku program

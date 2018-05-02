@@ -40,7 +40,7 @@ class Space:
         self.isUsed = False
         self.volume = width * depth * height  # 体积
         self.diagonal = math.sqrt(
-            width * width + depth * depth + height * height)  # 对角线
+                width * width + depth * depth + height * height)  # 对角线
         self.angle = math.sqrt(width * width + depth * depth) / self.diagonal
         self.area = 2 * width * depth + 2 * depth * height + 2 * width * height
         self.partition = []
