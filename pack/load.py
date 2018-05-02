@@ -2,7 +2,7 @@
 """
 Created on Mon Aug 28 14:10:40 2017
 
-@author: liuning11
+@author: liuning800202@gmail.com
 """
 from pack.goods import Goods
 import csv
@@ -11,9 +11,6 @@ import csv
 class load:
     def __init__(self, file):
         self.__file = file
-        # self.goods = []
-        # self.volume = 0
-        # self.cardinal = 999999999
 
     def load(self):
         goods = []
@@ -35,8 +32,5 @@ class load:
                 goods.append(g)
 
                 id += 1
-                # self.volume = self.volume + g.space.volume
-                # if self.cardinal > min(g.space.wdh):
-                #     self.cardinal = min(g.space.wdh)
 
         return Goods.sort(goods)

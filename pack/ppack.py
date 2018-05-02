@@ -6,7 +6,6 @@ Created on Mon Aug 28 14:10:40 2017
 """
 from pack.goods import Goods
 from pack.load import load
-from pack.unfold import unfold
 from functools import reduce
 from pack.box import Box
 
@@ -21,24 +20,23 @@ class ppack:
     def __init__(self, file):
         l = load(file)
         goods = l.load()
-        # unfold(self.goods)
-        self.boxRoot = Box.create(width=self.__width, depth=self.__depth, height=self.__height, cost=self.__cost,
-                                  volume=self.__volume, goodsCollect=goods)
-        # part for one boxtree
+        self.boxRoot = \
+            Box.create(width=self.__width, depth=self.__depth, height=self.__height, cost=self.__cost,
+                       volume=self.__volume, goodsCollect=goods)
         self.packing()
-        # self.printer()
 
     # boxed
     def packing(self):
-        print('\npacking...')
-        print("ID=%d" % (self.boxRoot.id))
+        print('\nPacking...')
+        print("Box ID=%d" % (self.boxRoot.id))
 
         self.__pack(self.boxRoot)
 
     def __pack(self, box):
         idx = box.isSplit()
 
-        print("\tSPLIT IDX=%d" % (idx))
+        print("\tSpliting Box...From IDX Of Goods=%d" % (idx))
+        Goods.printCollect(box.goodsCollect)
 
         if (idx >= 0):
             box.splitBox(idx)

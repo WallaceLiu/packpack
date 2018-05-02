@@ -2,9 +2,9 @@
 """
 Created on Mon Aug 28 14:10:40 2017
 
-@author: liuning11
+@author: liuning800202@gmail.com
 """
-from pack.base import Base, Space
+from pack.base import Base
 
 
 class Goods(Base):
@@ -24,7 +24,6 @@ class Goods(Base):
         Base.__init__(self, id, width, depth, height)
         self.pseudoId = pseudoId
         self.price = price
-        # self.isUsed = False
         self.gs = []
 
     def print(self):

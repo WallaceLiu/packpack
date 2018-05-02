@@ -2,28 +2,32 @@
 """
 Created on Mon Aug 28 14:10:40 2017
 
-@author: liuning11
+@author: liuning800202@gmail.com
 """
-import copy
-from pack.base import Base, Space
+from pack.base import Base
 from pack.goods import Goods
 
 
 class Box(Base):
-    """商品
+    """
+    Box class
     """
 
     def __init__(self, id, width, depth, height, cost, volume, goodsCollect):
         """
-        
+
+        :param id:
+        :param width:
+        :param depth:
+        :param height:
+        :param cost:
+        :param volume:
+        :param goodsCollect:
         """
         Base.__init__(self, id, width, depth, height)
 
         self.cost = cost
-        # self.costed = self.cost
         self.volume = volume
-        # self.volumed = self.volume
-        # self.isFull = False
         self.parent = None
         self.boxLeft = None
         self.boxRight = None
@@ -71,9 +75,9 @@ class Box(Base):
 
         self.goodsCollect = []
 
-        print('\t\tCreate Box...ID=%d' % (bx_left.id))
+        print('\t\tCreate New Box...ID=%d' % (bx_left.id))
         Goods.printCollect(bx_left.goodsCollect)
-        print('\t\tCreate Box...ID=%d' % (bx_right.id))
+        print('\t\tCreate New Box...ID=%d' % (bx_right.id))
         Goods.printCollect(bx_right.goodsCollect)
 
     def print(self):
@@ -98,6 +102,7 @@ class Box(Base):
             __print(self.boxLeft)
         if (self.boxRight != None):
             __print(self.boxRight)
+
         print('=============================================================')
 
     @staticmethod

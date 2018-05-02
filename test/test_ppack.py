@@ -10,7 +10,7 @@ from pack.ppack import ppack
 
 class TestPack(unittest.TestCase):
     def test(self):
-        p = ppack('goods-3.csv')
+        p = ppack('goods-2.csv')
         p.packing()
         print('-------------------------------------------')
         p.boxRoot.print()
